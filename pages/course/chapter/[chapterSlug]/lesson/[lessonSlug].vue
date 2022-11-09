@@ -41,46 +41,37 @@ const route = useRoute();
 
 definePageMeta({
   middleware: [
-    // function ({ params }, from) {
-    //   const course = useCourse();
+    function ({ params }, from) {
+      const course = useCourse();
 
-    //   const chapter = computed(() => {
-    //     return course.chapters.find(
-    //       (chapter) => chapter.slug === params.chapterSlug
-    //     );
-    //   });
+      const chapter = course.chapters.find(
+        (chapter) => chapter.slug === params.chapterSlug
+      );
 
-    //   if (!chapter.value) {
-    //     return abortNavigation({
-    //       statusCode: 404,
-    //       message: "Chapter middleware Issue Not found",
-    //     });
-    //   }
-    // },
-    function (to, from) {
-      if (to.params.chapterSlug === "1-chapter-1") {
-        return;
+      if (!chapter) {
+        return abortNavigation(
+          createError({
+            statusCode: 404,
+            message: 'Chapter not found',
+          })
+        );
       }
-      return navigateTo("/");
-    },
-  ],
-  // validate(routeInstance) {
-  //   const course = useCourse();
 
-  //   const chapter = computed(() => {
-  //     return course.chapters.find(
-  //       (chapter) => chapter.slug === routeInstance.params.chapterSlug
-  //     );
-  //   });
-  //   console.log(chapter);
-  //   if (!chapter.value) {
-  //     return createError({
-  //       statusCode: 404,
-  //       message: "Chapter definePageMeta Issue Not found",
-  //     });
-  //   }
-  //   return true;
-  // },
+      const lesson = chapter.lessons.find(
+        (lesson) => lesson.slug === params.lessonSlug
+      );
+
+      if (!lesson) {
+        return abortNavigation(
+          createError({
+            statusCode: 404,
+            message: 'Lesson not found',
+          })
+        );
+      }
+    },
+    'auth',
+  ],
 });
 
 // if (route.params.lessonSlug === "3-typing-component-events") {
