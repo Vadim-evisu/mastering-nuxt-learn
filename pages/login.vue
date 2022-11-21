@@ -5,7 +5,6 @@
       @click="loginHandler"
       class="bg-blue-500 text-white font-bold py-2 px-4 rounder"
     >
-      Login with Github
     </button>
   </div>
 </template>
