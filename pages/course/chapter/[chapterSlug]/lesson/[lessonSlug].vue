@@ -51,26 +51,21 @@ useHead({
   title,
 });
 
-const progress = useState('progress', () => {
-  return [];
-});
+// const progress = useState("progress", () => {
+//   return [];
+// });
+const progress = useLocalStorage("progress", []);
 
 const isLessonComplete = computed(() => {
   if (!progress.value[chapter.value.number - 1]) {
     return false;
   }
 
-  if (
-    !progress.value[chapter.value.number - 1][
-      lesson.value.number - 1
-    ]
-  ) {
+  if (!progress.value[chapter.value.number - 1][lesson.value.number - 1]) {
     return false;
   }
 
-  return progress.value[chapter.value.number - 1][
-    lesson.value.number - 1
-  ];
+  return progress.value[chapter.value.number - 1][lesson.value.number - 1];
 });
 
 const toggleComplete = () => {
@@ -78,8 +73,7 @@ const toggleComplete = () => {
     progress.value[chapter.value.number - 1] = [];
   }
 
-  progress.value[chapter.value.number - 1][
-    lesson.value.number - 1
-  ] = !isLessonComplete.value;
+  progress.value[chapter.value.number - 1][lesson.value.number - 1] =
+    !isLessonComplete.value;
 };
 </script>
