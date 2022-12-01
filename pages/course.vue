@@ -17,6 +17,13 @@
       >
         <h3>Chapters</h3>
         <!-- All the lessons for the course listed here -->
+        <div
+          class="space-y-1 mb-4 flex flex-col"
+          v-for="chapter in chapters"
+          :key="chapter.slug"
+        >
+          <h4>{{ chapter.title }}</h4>
+        </div>
       </div>
 
       <div class="prose p-12 bg-white rounded-md w-[65ch]">
@@ -25,3 +32,7 @@
     </div>
   </div>
 </template>
+
+<script setup>
+const { chapters } = useCourse();
+</script>
