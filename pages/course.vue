@@ -2,8 +2,7 @@
   <div class="prose mb-12">
     <h1 class="text-center">
       <span class="font-medium">
-        Course:
-        <span class="font-bold">Mastering Nuxt 3</span>
+        <span class="font-bold">{{ title }}</span>
       </span>
     </h1>
   </div>
@@ -40,14 +39,35 @@
     </div>
 
     <div class="prose p-12 bg-white rounded-md w-[65ch]">
-      <NuxtPage />
+      <NuxtErrorBoundary>
+        <NuxtPage />
+        <template #error="{ error }">
+          <p>An error occurred: {{ error }}</p>
+          <div>
+            <button
+              @click="resetError(error)"
+              class="hover:cursor-pointer bg-red-500 text-white p-2"
+            >
+              REset
+            </button>
+          </div>
+        </template>
+      </NuxtErrorBoundary>
     </div>
   </div>
 </template>
 
 <script setup>
-const { chapters } = useCourse();
+const { chapters, title } = useCourse();
 definePageMeta({
   layout: "custom",
 });
+
+const resetError = async (error) => {
+  await navigateTo(
+    "/course/chapter/1-chapter-1/lesson/1-introduction-to-typescript-with-vue-js-3"
+  );
+  // console.log(error);
+  error.value = null;
+};
 </script>
