@@ -1,15 +1,12 @@
 <template>
-  <div
-    v-if="user"
-    class="rounded p-3 flex items-center space-x-3 bg-white"
-  >
+  <div v-if="user" class="rounded p-3 flex items-center space-x-3 bg-white">
     <img
       class="rounded-full w-12 h-12 border-2 border-blue-400"
       :src="profile"
     />
     <div class="text-right">
-      <div class="font-medium">{{ name }}</div>
-      <button class="text-sm underline text-slate-500">
+      <div class="font-medium">{{ userNname }}</div>
+      <button @click="logout" class="text-sm underline text-slate-500">
         Log out
       </button>
     </div>
@@ -18,11 +15,19 @@
 
 <script setup lang="ts">
 const user = useSupabaseUser();
+const { auth } = useSupabaseClient();
 
-const name = computed(
-  () => user?.value.user_metadata.full_name
-);
-const profile = computed(
-  () => user?.value.user_metadata.avatar_url
-);
+const userNname = computed(() => user.value.user_metadata.user_name);
+const profile = computed(() => user.value.user_metadata.avatar_url);
+
+const logout = async () => {
+  const { error } = await auth.signOut();
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  navigateTo("/login");
+};
 </script>

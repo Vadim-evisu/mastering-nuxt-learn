@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div
-      class="mb-4 flex justify-between items-center w-full"
-    >
+  <div class="container">
+    <div class="mb-4 flex justify-between items-center w-full">
       <h1 class="text-3xl">
         <span class="font-medium">
           <span class="font-bold">{{ title }}</span>
@@ -11,7 +9,7 @@
       <UserCard />
     </div>
 
-    <div>
+    <div class="mb-10">
       <NuxtLink class="bg-blue-500 p-4 rounded-md"> Home </NuxtLink>
     </div>
 
