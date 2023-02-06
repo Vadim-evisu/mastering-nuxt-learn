@@ -21,3 +21,7 @@ type CourseMeta = {
   title: string;
   chapters: OutlineChapter[];
 }
+
+export default defineEventHandler((event) => {
+  
+})
